@@ -1,14 +1,14 @@
 -- Require everything
 require("camera")
-Ser       = require("ser")
-Push      = require("push")
 Gamestate = require("gamestate")
-Timer     = require("timer")
 Platform  = require("platform")
+Drawing   = require("drawing")
 Button    = require("button")
 Player    = require("player")
+Timer     = require("timer")
 Tools     = require("tools")
-Drawing   = require("drawing")
+Push      = require("push")
+Ser       = require("ser")
 
 -- States
 Logos_Screen = require("logos_screen")
@@ -16,9 +16,9 @@ Main_Menu    = require("main_menu")
 Game         = require("game")
 
 -- Global variables
-Time_0                      = love.timer.getTime()
 Screen_Width, Screen_Height = love.window.getDesktopDimensions()
 Width, Height               = 1920, 1080
+Time_0                      = love.timer.getTime()
 
 function love.load()
 	-- Load settings

@@ -1,17 +1,18 @@
 local Platform = {}
 
 function Platform:create(name, posX, posY, w, h)
-
-	local platform = {}
-	platform.w       = w or Gridfactor
-	platform.h       = h or Gridfactor
-	platform.x, platform.y = Tools.toGrid(posX, posY)
-	platform.drawing = false
-	platform.body    = love.physics.newBody(World, platform.x, platform.y, "static")
-	platform.shape   = love.physics.newPolygonShape(0, 0, platform.w, 0, platform.w, platform.h, 0, platform.h)
-	platform.fixture = love.physics.newFixture(platform.body, platform.shape)
-	platform.fixture:setUserData(name)
-	table.insert(Platform, platform)
+	if Platform:isPlatform(posX, posY) == false then
+		local platform = {}
+		platform.w       = w or Gridfactor
+		platform.h       = h or Gridfactor
+		platform.x, platform.y = Tools.toGrid(posX, posY)
+		platform.drawing = false
+		platform.body    = love.physics.newBody(World, platform.x, platform.y, "static")
+		platform.shape   = love.physics.newPolygonShape(0, 0, platform.w, 0, platform.w, platform.h, 0, platform.h)
+		platform.fixture = love.physics.newFixture(platform.body, platform.shape)
+		platform.fixture:setUserData(name)
+		table.insert(Platform, platform)
+	end
 end
 
 function Platform:destroy()
@@ -56,8 +57,7 @@ function Platform:mousereleased(x, y, button, isTouch)
 	-- end
 end
 
-function Platform:isPlatform()
-	local x, y = love.mouse.getPosition()
+function Platform:isPlatform(x, y)
 	local gridx, gridy = Push:toGame(x, y)
 	gridx, gridy = Tools.toGrid(gridx, gridy)
 	for i,p in ipairs(Platform) do

@@ -28,6 +28,8 @@ function Player:update(dt)
 			self.body:applyForce(-self.force, 0)
 		end
 	-- end
+
+	-- Set max velocity
 	local xvel, yvel = Player.body:getLinearVelocity()
 	if xvel > Player.maxvel then
 		Player.body:setLinearVelocity(Player.maxvel, yvel)

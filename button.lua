@@ -40,12 +40,6 @@ end
 
 function Button:mousepressed(x, y, button, isTouch)
 	Button:isPressed(x, y)
-	-- Change drawing state
-	if Drawing.state == "Platform" then
-		-- Platform:create()
-	elseif Drawing.state == "Erase" then
-
-	end
 end
 
 function Button:mousereleased(x, y, button, isTouch)
@@ -62,18 +56,14 @@ function Button:isPressed(x, y)
 		if x >= b.x and x <= b.x + b.w then
 			if y >= b.y and y <= b.y + b.h then
 				-- If a button to create platform is pressed
-				-- if b.name == "Eraser" then
+				if b.name ~= "Erase" and b.name ~= "Platform" then
 					Drawing:changeState(b.name)
-					Button:create("Platform", 0, 0)
 					return b.name or "Some error here!"
-				-- end
-			else
-				return "Nothing"
+				end
 			end
-		else
-			return "Nothing"
 		end
 	end
+	return "Nothing"
 end
 
 function Button:isButton(x, y)

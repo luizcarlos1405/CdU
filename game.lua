@@ -39,8 +39,8 @@ function Game:enter()
 	Player:load()
 
 	-- Set Platforms
-	-- Platform:create("Platform", 400, 420, nil, nil)
-	-- Platform:create("Platform", 200, 200, nil, nil)
+	Platform:create("Platform", 0, 900, nil, nil)
+	Platform:create("Platform", 40, 900, nil, nil)
 
 	-- Set Buttons
 	Button:create("Create Platform", Width - 37, 40)
