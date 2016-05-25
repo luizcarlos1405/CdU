@@ -64,7 +64,7 @@ function Button:isPressed(x, y)
 				-- If a button to create platform is pressed
 				-- if b.name == "Eraser" then
 					Drawing:changeState(b.name)
-					Button:create("Platform")
+					Button:create("Platform", 0, 0)
 					return b.name or "Some error here!"
 				-- end
 			else

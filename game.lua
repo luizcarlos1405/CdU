@@ -20,7 +20,7 @@ function Game:enter()
 	-- BORDER
 	Border = {}
 	Border.body    = love.physics.newBody(World, 0, 0, "static")
-	Border.shape   = love.physics.newChainShape(true, 0, Height + 1, 0, 0, Width + 1, 0, Width + 1, Height + 1)
+	Border.shape   = love.physics.newChainShape(true, 0, (Height) + 1, 0, 0, Width + 1, 0, Width + 1, Height + 1)
 	Border.fixture = love.physics.newFixture(Border.body, Border.shape)
 	Border.fixture:setUserData("Border")
 
