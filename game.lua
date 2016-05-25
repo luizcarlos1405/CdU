@@ -18,11 +18,11 @@ function Game:enter()
 	love.physics.setMeter(64)
 
 	-- BORDER
-	Border = {}
-	Border.body    = love.physics.newBody(World, 0, 0, "static")
-	Border.shape   = love.physics.newChainShape(true, 0, (Height) + 1, 0, 0, Width + 1, 0, Width + 1, Height + 1)
-	Border.fixture = love.physics.newFixture(Border.body, Border.shape)
-	Border.fixture:setUserData("Border")
+	-- Border = {}
+	-- Border.body    = love.physics.newBody(World, 0, 0, "static")
+	-- Border.shape   = love.physics.newChainShape(true, 0, (Height) + 1, 0, 0, Width + 1, 0, Width + 1, Height + 1)
+	-- Border.fixture = love.physics.newFixture(Border.body, Border.shape)
+	-- Border.fixture:setUserData("Border")
 
 	-- BALL
 	Ball         = {}
@@ -32,15 +32,15 @@ function Game:enter()
 	Ball.body    = love.physics.newBody(World, Ball.x, Ball.y, "dynamic")
 	Ball.shape   = love.physics.newCircleShape(Ball.r)
 	Ball.fixture = love.physics.newFixture(Ball.body, Ball.shape)
-	Ball.fixture:setRestitution(1)
+	Ball.fixture:setRestitution(0.9)
 	-- ENDBALL
 
 	-- Load Player
 	Player:load()
 
 	-- Set Platforms
-	Platform:create("Platform", 0, 900, nil, nil)
-	Platform:create("Platform", 40, 900, nil, nil)
+	Platform:create("Fixed Platform", 0, 1064, Width, nil)
+	-- Platform:create("Platform", 40, 900, nil, nil)
 
 	-- Set Buttons
 	Button:create("Create Platform", Width - 37, 40)
@@ -121,9 +121,7 @@ end
 
 function endContact(fa, fb, coll)
 	if fa == Player.fixture or fb == Player.fixture then
-		if fa == Border.fixture or fa == Border.fixture then
-			Player.onfloor = false
-		elseif fa:getUserData() == "Platform" or fb:getUserData() == "Platform" then
+	if fa:getUserData() == "Platform" or "Border" or fb:getUserData() == "Platform" or "Border" then
 			Player.onfloor = false
 		end
 	end
@@ -131,11 +129,7 @@ end
 
 function preSolve(fa, fb, coll)
 	if fa == Player.fixture or fb == Player.fixture then
-		if fa == Border.fixture or fa == Border.fixture then
-			if Player.onfloor == false then
-				Player.onfloor = true
-			end
-		elseif fa:getUserData() == "Platform" or fb:getUserData() == "Platform" then
+		if fa:getUserData() == "Platform" or "Border" or fb:getUserData() == "Platform" or "Border" then
 			if Player.onfloor == false then
 				Player.onfloor = true
 			end

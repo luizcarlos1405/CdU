@@ -14,6 +14,7 @@ function Player:load()
 	self.body:setMass(80)
 	self.body:setLinearDamping(4)
 	self.body:setFixedRotation(true)
+	self.body:setPosition(self.w, Height - 2 * Gridfactor)
 	-- self.fixture:setFriction(1)
 	-- self.fixture:setRestitution(0.3)
 end
@@ -35,6 +36,17 @@ function Player:update(dt)
 		Player.body:setLinearVelocity(Player.maxvel, yvel)
 	elseif xvel < -Player.maxvel then
 		Player.body:setLinearVelocity(-Player.maxvel, yvel)
+	end
+
+	-- Kills Player if it get out of the screen
+	if Player.body:getX() < 0 then
+		Gamestate.switch(Logos_Screen)
+	elseif Player.body:getX() > Width then
+		Gamestate.switch(Logos_Screen)
+	elseif Player.body:getY() < 0 then
+		Gamestate.switch(Logos_Screen)
+	elseif Player.body:getY() > Height then
+		Gamestate.switch(Logos_Screen)
 	end
 end
 
