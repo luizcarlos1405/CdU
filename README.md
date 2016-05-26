@@ -1,4 +1,4 @@
-#CdU
+#CdU - Game
 
 A prototype for a game. All rights reserved.
 
