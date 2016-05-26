@@ -1,12 +1,17 @@
 local Platform = {}
 
-function Platform:create(name, posX, posY, w, h)
-	if Platform:isPlatform(posX, posY) == false then
+Platform.pos = {}
+
+function Platform:create(name, x, y, w, h, level)
+	if Platform:isPlatform(x, y) == false then
+		if level == false or level == nil then
+			table.insert(Platform.pos, {x, y})
+		end
 		local platform = {}
 		platform.w             = w or Gridfactor
 		platform.h             = h or Gridfactor
-		posX, posY             = Push:toGame(posX, posY)
-		platform.x, platform.y = Tools.toGrid(posX, posY)
+		-- x, y                   = Push:toGame(x, y)
+		platform.x, platform.y = x, y--Tools.gameToGrid(x, y)
 		platform.drawing       = false
 		platform.body          = love.physics.newBody(World, platform.x, platform.y, "static")
 		platform.shape         = love.physics.newPolygonShape(0, 0, platform.w, 0, platform.w, platform.h, 0, platform.h)
@@ -19,7 +24,7 @@ end
 function Platform:destroy()
 	local x, y = love.mouse.getPosition()
 	local gridx, gridy = Push:toGame(x, y)
-	gridx, gridy = Tools.toGrid(gridx, gridy)
+	gridx, gridy = Tools.gameToGrid(gridx, gridy)
 	for i,p in ipairs(Platform) do
 		if p.x == gridx and p.y == gridy then
 			p.fixture:destroy()
@@ -34,7 +39,7 @@ function Platform:update(dt)
 		if p.drawing then
 			local x, y = love.mouse.getPosition()
 			p.x, p.y = Push:toGame(x, y)
-			p.x, p.y = Tools.toGrid(p.x, p.y)
+			p.x, p.y = Tools.gameToGrid(p.x, p.y)
 			p.body:setPosition(p.x, p.y)
 			-- self.create("Platform", p.x, p.y)
 		end
@@ -60,7 +65,7 @@ end
 
 function Platform:isPlatform(x, y)
 	local gridx, gridy = Push:toGame(x, y)
-	gridx, gridy = Tools.toGrid(gridx, gridy)
+	gridx, gridy = Tools.gameToGrid(gridx, gridy)
 	for i,p in ipairs(Platform) do
 		if p.x == gridx and p.y == gridy then
 			return true

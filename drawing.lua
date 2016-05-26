@@ -16,7 +16,7 @@ function Drawing:changeState(to)
 		Button:create("Platform", click_x, click_y)
 	elseif to == "Eraser" then
 		for i = 1, #Button do
-			if Button [i] then
+			if Button[i] then
 				if Button[i].name == "Platform" then
 					table.remove(Button, i)
 				end
@@ -32,15 +32,14 @@ function Drawing:update(dt)
 		for i, b in ipairs(Button) do
 			-- If it's a button for creating platforms
 			if love.mouse.isDown(1) then
-				Platform:create("Platform", love.mouse.getPosition())
+				Platform:create("Platform", Tools.deskToGrid(love.mouse.getPosition()))
 				-- Drawing.state = "Create Platform"
 			end
 
 			-- Set it's position to the mouse
 			if b.name == "Platform" then
 				local x, y = love.mouse.getPosition()
-				b.x, b.y = Push:toGame(x, y)
-				b.x, b.y = Tools.toGrid(b.x, b.y)
+				b.x, b.y = Tools.deskToGrid(x, y)
 			end
 		end
 	elseif Drawing.state == "Eraser" then
@@ -53,7 +52,7 @@ function Drawing:update(dt)
 			if b.name == "Erase" then
 				local x, y = love.mouse.getPosition()
 				b.x, b.y = Push:toGame(x, y)
-				b.x, b.y = Tools.toGrid(b.x, b.y)
+				b.x, b.y = Tools.deskToGrid(x, y)
 			end
 		end
 	end

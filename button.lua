@@ -16,7 +16,7 @@ function Button:create(name, posX, posY, w, h)
 		button.w           = w or Gridfactor
 		button.h           = h or Gridfactor
 		posX, posY         = Push:toGame(posX, posY)
-		button.x, button.y = Tools.toGrid(posX, posY)
+		button.x, button.y = Tools.gameToGrid(posX, posY)
 		button.name        = name or "Button"
 		table.insert(Button, button)
 	end
@@ -74,7 +74,7 @@ end
 function Button:isButton(x, y)
 	local x, y = love.mouse.getPosition()
 	local gridx, gridy = Push:toGame(x, y)
-	gridx, gridy = Tools.toGrid(gridx, gridy)
+	gridx, gridy = Tools.gameToGrid(gridx, gridy)
 
 	for i,p in ipairs(Button) do
 		if p.x == gridx and p.y == gridy then

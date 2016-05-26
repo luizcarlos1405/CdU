@@ -1,8 +1,8 @@
 local Tools = {}
 
 -- Trasform game position to Grid position
-function Tools.toGrid(x, y)
-	Gfac = Gridfactor or 32
+function Tools.gameToGrid(x, y)
+	local Gfac = Gridfactor or 32
 	if x then
 		Gx   = (x - x % Gfac) or 0
 	else
@@ -14,6 +14,21 @@ function Tools.toGrid(x, y)
 		Gy = 0
 	end
 	return Gx, Gy
+end
+
+function Tools.gridToGame(x, y)
+	local Gfac = Gridfactor or 32
+	x    = (x - 1) * Gridfactor
+	y    = (y - 1) * Gridfactor
+	-- local Gx, Gy = Push:toGame(x, y)
+	return x, y
+end
+
+function Tools.deskToGrid(x, y)
+	local Gfac = Gridfactor or 32
+	x, y = Push:toGame(x, y)
+	x, y = Tools.gameToGrid(x, y)
+	return x, y
 end
 
 return Tools

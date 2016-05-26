@@ -4,7 +4,7 @@ text = ""
 
 function Game:enter()
 	love.graphics.setBackgroundColor(1, 0, 30)
-	Gridfactor = 32
+	Gridfactor = 32 -- 60/34
 
 	-- Fonts
 	outwrite_100 = love.graphics.newFont("assets/fonts/outwrite.ttf", 100)
@@ -18,11 +18,11 @@ function Game:enter()
 	love.physics.setMeter(64)
 
 	-- BORDER
-	-- Border = {}
-	-- Border.body    = love.physics.newBody(World, 0, 0, "static")
-	-- Border.shape   = love.physics.newChainShape(true, 0, (Height) + 1, 0, 0, Width + 1, 0, Width + 1, Height + 1)
-	-- Border.fixture = love.physics.newFixture(Border.body, Border.shape)
-	-- Border.fixture:setUserData("Border")
+	Border = {}
+	Border.body    = love.physics.newBody(World, 0, 0, "static")
+	Border.shape   = love.physics.newChainShape(true, 0, (Height) + 1, 0, 0, Width + 1, 0, Width + 1, Height + 1)
+	Border.fixture = love.physics.newFixture(Border.body, Border.shape)
+	Border.fixture:setUserData("Border")
 
 	-- BALL
 	Ball         = {}
@@ -32,14 +32,15 @@ function Game:enter()
 	Ball.body    = love.physics.newBody(World, Ball.x, Ball.y, "dynamic")
 	Ball.shape   = love.physics.newCircleShape(Ball.r)
 	Ball.fixture = love.physics.newFixture(Ball.body, Ball.shape)
-	Ball.fixture:setRestitution(0.9)
+	Ball.fixture:setRestitution(0.99)
 	-- ENDBALL
 
 	-- Load Player
 	Player:load()
 
 	-- Set Platforms
-	Platform:create("Fixed Platform", 0, 764, Width, nil)
+	Platform:create("Fixed Platform", Tools.gridToGame(43, 5))
+	Platform:create("Test Platform", Tools.gridToGame(43, 1))
 	-- Platform:create("Platform", 40, 900, nil, nil)
 
 	-- Set Buttons
@@ -74,10 +75,11 @@ function Game:draw()
 	Player:draw()
 	Button:draw()
 
-	if text then
+	if text and Platform.pos then
 		love.graphics.print(#Button.."\n"..#Platform.." "..Player.body:getLinearVelocity()..
 		"\n"..Drawing.state..
-		"\n".."Q - Draw\nE - Erase")
+		"\nQ - Draw\nE - Erase"..
+		"\n"..#Platform.pos)
 	end
 
 	-- BALL
@@ -111,6 +113,17 @@ function love.keypressed(key, scancode, isrepeat)
 		Drawing:changeState("Create Platform")
 	elseif key == "e" then
 		Drawing:changeState("Eraser")
+	elseif key == "p" then
+		-- Save platform positions
+		love.filesystem.write("level.lua", Ser(Platform.pos))
+	elseif key == "o" then
+		-- Load platform positions and create'em
+		Platform.pos = require("level")
+		for i = 1, #Platform.pos do
+			if Platform.pos[i][1] ~= nil and Platform.pos[i][2] ~= nil then
+				Platform:create("Platform", Platform.pos[i][1], Platform.pos[i][2], nil, nil, true)
+			end
+		end
 	end
 end
 
