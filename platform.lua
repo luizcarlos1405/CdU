@@ -3,13 +3,14 @@ local Platform = {}
 function Platform:create(name, posX, posY, w, h)
 	if Platform:isPlatform(posX, posY) == false then
 		local platform = {}
-		platform.w       = w or Gridfactor
-		platform.h       = h or Gridfactor
+		platform.w             = w or Gridfactor
+		platform.h             = h or Gridfactor
+		posX, posY             = Push:toGame(posX, posY)
 		platform.x, platform.y = Tools.toGrid(posX, posY)
-		platform.drawing = false
-		platform.body    = love.physics.newBody(World, platform.x, platform.y, "static")
-		platform.shape   = love.physics.newPolygonShape(0, 0, platform.w, 0, platform.w, platform.h, 0, platform.h)
-		platform.fixture = love.physics.newFixture(platform.body, platform.shape)
+		platform.drawing       = false
+		platform.body          = love.physics.newBody(World, platform.x, platform.y, "static")
+		platform.shape         = love.physics.newPolygonShape(0, 0, platform.w, 0, platform.w, platform.h, 0, platform.h)
+		platform.fixture       = love.physics.newFixture(platform.body, platform.shape)
 		platform.fixture:setUserData(name)
 		table.insert(Platform, platform)
 	end

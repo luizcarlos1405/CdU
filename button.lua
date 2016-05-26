@@ -1,6 +1,6 @@
 local Button = {}
 
-function Button:create(name, x, y, w, h)
+function Button:create(name, posX, posY, w, h)
 
 	local button = {}
 	-- If it should follow mouse
@@ -12,11 +12,14 @@ function Button:create(name, x, y, w, h)
 		button.drawing = false
 	end
 
-	button.w           = w or Gridfactor
-	button.h           = h or Gridfactor
-	button.x, button.y = Tools.toGrid(x, y)
-	button.name        = name or "Button"
-	table.insert(Button, button)
+	if posX and posY then
+		button.w           = w or Gridfactor
+		button.h           = h or Gridfactor
+		posX, posY         = Push:toGame(posX, posY)
+		button.x, button.y = Tools.toGrid(posX, posY)
+		button.name        = name or "Button"
+		table.insert(Button, button)
+	end
 
 	-- button.body    = love.physics.newBody(World, button.x + button.w / 2, button.y + button.h / 2, "static")
 	-- button.shape   = love.physics.newRectangleShape(button.w, button.h)
@@ -52,13 +55,15 @@ function Button:mousereleased(x, y, button, isTouch)
 end
 
 function Button:isPressed(x, y)
-	for i, b in ipairs(Button) do
-		if x >= b.x and x <= b.x + b.w then
-			if y >= b.y and y <= b.y + b.h then
-				-- If a button to create platform is pressed
-				if b.name ~= "Erase" and b.name ~= "Platform" then
-					Drawing:changeState(b.name)
-					return b.name or "Some error here!"
+	if x and y then
+		for i, b in ipairs(Button) do
+			if x >= b.x and x <= b.x + b.w then
+				if y >= b.y and y <= b.y + b.h then
+					-- If a button to create platform is pressed
+					if b.name ~= "Erase" and b.name ~= "Platform" then
+						Drawing:changeState(b.name)
+						return b.name or "Some error here!"
+					end
 				end
 			end
 		end

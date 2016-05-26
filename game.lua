@@ -27,8 +27,8 @@ function Game:enter()
 	-- BALL
 	Ball         = {}
 	Ball.r       = 16
-	Ball.x       = 80
-	Ball.y       = Ball.x
+	Ball.x       = Width / 2
+	Ball.y       = 0
 	Ball.body    = love.physics.newBody(World, Ball.x, Ball.y, "dynamic")
 	Ball.shape   = love.physics.newCircleShape(Ball.r)
 	Ball.fixture = love.physics.newFixture(Ball.body, Ball.shape)
@@ -39,12 +39,12 @@ function Game:enter()
 	Player:load()
 
 	-- Set Platforms
-	Platform:create("Fixed Platform", 0, 1064, Width, nil)
+	Platform:create("Fixed Platform", 0, 764, Width, nil)
 	-- Platform:create("Platform", 40, 900, nil, nil)
 
 	-- Set Buttons
-	Button:create("Create Platform", Width - 37, 40)
-	Button:create("Eraser", Width - 37, 120)
+	-- Button:create("Create Platform", Width - 37, 40)
+	-- Button:create("Eraser", Width - 37, 120)
 end
 
 function Game:update(dt)
@@ -76,7 +76,8 @@ function Game:draw()
 
 	if text then
 		love.graphics.print(#Button.."\n"..#Platform.." "..Player.body:getLinearVelocity()..
-		"\n"..Drawing.state)
+		"\n"..Drawing.state..
+		"\n".."Q - Draw\nE - Erase")
 	end
 
 	-- BALL
@@ -106,6 +107,11 @@ end
 
 function love.keypressed(key, scancode, isrepeat)
 	Player:keypressed(key)
+	if key == "q"then
+		Drawing:changeState("Create Platform")
+	elseif key == "e" then
+		Drawing:changeState("Eraser")
+	end
 end
 
 -- COLISIONS

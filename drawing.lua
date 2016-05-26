@@ -5,17 +5,21 @@ Drawing.state = "Nothing"
 function Drawing:changeState(to)
 	Drawing.state = to or "Nothing"
 	if to == "Create Platform" then
-		for i, b in ipairs(Button) do
-			if b.name == "Erase" then
-				table.remove(Button, i)
+		for i = 1, #Button do
+			if Button [i] then
+				if Button[i].name == "Erase" then
+					table.remove(Button, i)
+				end
 			end
 		end
 		local click_x, click_y = love.mouse.getPosition()
 		Button:create("Platform", click_x, click_y)
 	elseif to == "Eraser" then
-		for i, b in ipairs(Button) do
-			if b.name == "Platform" then
-				table.remove(Button, i)
+		for i = 1, #Button do
+			if Button [i] then
+				if Button[i].name == "Platform" then
+					table.remove(Button, i)
+				end
 			end
 		end
 		local click_x, click_y = love.mouse.getPosition()
@@ -27,11 +31,9 @@ function Drawing:update(dt)
 	if Drawing.state == "Create Platform" then
 		for i, b in ipairs(Button) do
 			-- If it's a button for creating platforms
-			if love.mouse.isDown(1) and Platform:isPlatform(love.mouse.getPosition()) == false then
-				if Button:isButton(love.mouse.getPosition()) == false then
-					Platform:create("Platform", b.x, b.y)
-					Drawing.state = "Create Platform"
-				end
+			if love.mouse.isDown(1) then
+				Platform:create("Platform", love.mouse.getPosition())
+				-- Drawing.state = "Create Platform"
 			end
 
 			-- Set it's position to the mouse
