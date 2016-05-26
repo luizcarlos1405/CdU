@@ -4,7 +4,7 @@ text = ""
 
 function Game:enter()
 	love.graphics.setBackgroundColor(1, 0, 30)
-	Gridfactor = 32 -- 60/34
+	Gridfactor = 32 -- 60/33
 
 	-- Fonts
 	outwrite_100 = love.graphics.newFont("assets/fonts/outwrite.ttf", 100)
@@ -39,8 +39,8 @@ function Game:enter()
 	Player:load()
 
 	-- Set Platforms
-	Platform:create("Fixed Platform", Tools.gridToGame(43, 5))
-	Platform:create("Test Platform", Tools.gridToGame(43, 1))
+	-- Platform:create("Fixed Platform", Tools.gridToGame(43, 5))
+	-- Platform:create("Test Platform", Tools.gridToGame(43, 1))
 	-- Platform:create("Platform", 40, 900, nil, nil)
 
 	-- Set Buttons
@@ -121,7 +121,7 @@ function love.keypressed(key, scancode, isrepeat)
 		Platform.pos = require("level")
 		for i = 1, #Platform.pos do
 			if Platform.pos[i][1] ~= nil and Platform.pos[i][2] ~= nil then
-				Platform:create("Platform", Platform.pos[i][1], Platform.pos[i][2], nil, nil, true)
+				Platform:create("Platform", Platform.pos[i][1], Platform.pos[i][2])
 			end
 		end
 	end

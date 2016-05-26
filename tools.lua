@@ -20,7 +20,6 @@ function Tools.gridToGame(x, y)
 	local Gfac = Gridfactor or 32
 	x    = (x - 1) * Gridfactor
 	y    = (y - 1) * Gridfactor
-	-- local Gx, Gy = Push:toGame(x, y)
 	return x, y
 end
 

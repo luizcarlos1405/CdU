@@ -1,11 +1,11 @@
 -- Shows some logos and stuff
 local Logos_Screen   = {}
-local logoLove       = {}
 local logoPalco      = {}
+local logoLove       = {}
 
 function Logos_Screen:enter()
-	time_0 = love.timer.getTime()
 	secondstep = false
+	time_0     = love.timer.getTime()
 	love.graphics.setBackgroundColor(208, 239, 255)
 
 	-- Fonts
@@ -34,8 +34,8 @@ function Logos_Screen:enter()
 	logoPalco.r   = 0
 
 	-- Tweening function
-	Timer.tween(2, logoPalco.pos, {logoPalco.pos[1], Height / 2}, "in-bounce")
-	Timer.tween(2, logoPalco.s, {1, 1}, 'in-bounce')
+	Timer.tween(2, logoPalco.pos, {nil, Height / 2}, "in-bounce")
+	Timer.tween(2, logoPalco.s, {1, 1}, "in-bounce")
 	-- Timer.tween(2, logoPalco.s, {0.2, 0.2}, 'out-quad')
 
 end
@@ -86,13 +86,14 @@ function Logos_Screen:keypressed(key)
 	end
 end
 
-function Logos_Screen:leve()
-	time_0       = nil
-	time         = nil
-	secondstep   = nil
+function Logos_Screen:leave()
+
 	outwrite_100 = nil
+	secondstep   = nil
 	ecran_100    = nil
 	poweredby    = nil
+	time_0       = nil
+	time         = nil
 
 -- TODO(Luiz): Clear variables when exiting the gamestate
 end

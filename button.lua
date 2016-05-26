@@ -15,9 +15,8 @@ function Button:create(name, posX, posY, w, h)
 	if posX and posY then
 		button.w           = w or Gridfactor
 		button.h           = h or Gridfactor
-		posX, posY         = Push:toGame(posX, posY)
-		button.x, button.y = Tools.gameToGrid(posX, posY)
 		button.name        = name or "Button"
+		button.x, button.y = posX, posY
 		table.insert(Button, button)
 	end
 

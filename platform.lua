@@ -2,15 +2,13 @@ local Platform = {}
 
 Platform.pos = {}
 
-function Platform:create(name, x, y, w, h, level)
+function Platform:create(name, x, y, w, h)
 	if Platform:isPlatform(x, y) == false then
-		if level == false or level == nil then
-			table.insert(Platform.pos, {x, y})
-		end
+		table.insert(Platform.pos, {x, y})
 		local platform = {}
-		platform.w             = w or Gridfactor
+		platform.w             = w or 32
 		platform.h             = h or Gridfactor
-		-- x, y                   = Push:toGame(x, y)
+		-- x, y                = Push:toGame(x, y)
 		platform.x, platform.y = x, y--Tools.gameToGrid(x, y)
 		platform.drawing       = false
 		platform.body          = love.physics.newBody(World, platform.x, platform.y, "static")
