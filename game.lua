@@ -75,17 +75,20 @@ function Game:draw()
 	Player:draw()
 	Button:draw()
 
-	if text and Platform.pos then
-		love.graphics.print(#Button.."\n"..#Platform.." "..Player.body:getLinearVelocity()..
-		"\n"..Drawing.state..
-		"\nQ - Draw\nE - Erase"..
-		"\n"..#Platform.pos)
-	end
-
 	-- BALL
 	love.graphics.setColor(214, 223, 46)
 	love.graphics.circle("fill", Ball.body:getX(), Ball.body:getY(), Ball.r)
 	-- ENDBALL
+
+	-- CONTROL
+	if text and Platform.pos then
+		love.graphics.print(#Button.."\n"..#Platform.." "..Player.body:getLinearVelocity()..
+		"\n"..Drawing.state..
+		"\nQ - Draw\nE - Erase"..
+		"\n"..#Platform.pos..
+		"\n"..text)
+	end
+	love.graphics.rectangle("line", Player.body:getX() - 1, Player.body:getY() - 1, 3, 3)
 
 	-- Ends screen scalling
 	Push:apply("end")
@@ -130,27 +133,33 @@ end
 -- COLISIONS
 
 function beginContact(fa, fb, coll)
-	-- if fa == Border.fixture or fa == Border.fixture then
-	-- 	if fa == Player.fixture or fb == Player.fixture then
-	-- 		Player.onfloor = true
-	-- 		text = "on floor"
+	-- if fa == Player.fixture or fb == Player.fixture then
+	-- 	if fa:getUserData() == "Platform" or "Border" or fb:getUserData() == "Platform" or "Border" then
+	-- 		if Player.onfloor == false then
+	-- 			Player.onfloor = true
+	-- 		end
 	-- 	end
 	-- end
 end
 
 function endContact(fa, fb, coll)
 	if fa == Player.fixture or fb == Player.fixture then
-	if fa:getUserData() == "Platform" or "Border" or fb:getUserData() == "Platform" or "Border" then
+		if fa:getUserData() == "Platform" or fa:getUserData() == "Border" or fb:getUserData() == "Platform" or fb:getUserData() == "Border" then
 			Player.onfloor = false
 		end
 	end
+
 end
 
 function preSolve(fa, fb, coll)
 	if fa == Player.fixture or fb == Player.fixture then
-		if fa:getUserData() == "Platform" or "Border" or fb:getUserData() == "Platform" or "Border" then
-			if Player.onfloor == false then
-				Player.onfloor = true
+		if fa:getUserData() == "Platform" or fa:getUserData() == "Border" or fb:getUserData() == "Platform" or fb:getUserData() == "Border" then
+			nx, ny = coll:getNormal()
+			text = nx.." "..ny
+			if nx == 0 then
+				if Player.onfloor == false then
+					Player.onfloor = true
+				end
 			end
 		end
 	end

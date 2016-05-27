@@ -41,7 +41,7 @@ function Drawing:update(dt)
 		end
 	elseif Drawing.state == "Eraser" then
 		for i, b in ipairs(Button) do
-			if Platform:isPlatform(love.mouse.getPosition()) and love.mouse.isDown(1) then
+			if Platform:isPlatform(Tools.deskToGrid(love.mouse.getPosition())) and love.mouse.isDown(1) then
 				Platform:destroy()
 			end
 

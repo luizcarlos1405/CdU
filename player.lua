@@ -1,13 +1,13 @@
 local Player = {}
 
 function Player:load()
+	self.onfloor = false
+	self.maxvel  = 500
+	self.force   = 6000
+	self.jump    = 2200
 	self.w       = 64
 	self.h       = 128
 	self.vel     = 200
-	self.force   = 6000
-	self.jump    = 4000
-	self.maxvel  = 500
-	self.onfloor = false
 	self.body    = love.physics.newBody(World, self.w, self.h, "dynamic")
 	self.shape   = love.physics.newRectangleShape(self.w, self.h)
 	self.fixture = love.physics.newFixture(self.body, self.shape)
@@ -15,8 +15,8 @@ function Player:load()
 	self.body:setLinearDamping(4)
 	self.body:setFixedRotation(true)
 	self.body:setPosition(self.w, Height - 2 * Gridfactor)
+	self.fixture:setRestitution(0)
 	-- self.fixture:setFriction(1)
-	-- self.fixture:setRestitution(0.3)
 end
 
 function Player:update(dt)
@@ -27,6 +27,11 @@ function Player:update(dt)
 		end
 		if love.keyboard.isDown("a") then
 			self.body:applyForce(-self.force, 0)
+		end
+		-- Jump!
+		if love.keyboard.isDown("space") and Player.onfloor then
+			Player.body:applyLinearImpulse(0, -Player.jump)
+			-- Player.body:setLinearVelocity(Player.body:getLinearVelocity(), -2000)
 		end
 	-- end
 
@@ -61,9 +66,10 @@ function Player:setPosition(x, y)
 end
 
 function Player:keypressed(key)
-	if key == "space" and Player.onfloor then
-		Player.body:applyLinearImpulse(0, -Player.jump)
-	end
+	-- if key == "space" and Player.onfloor then
+	-- 	-- Player.body:applyLinearImpulse(0, -Player.jump)
+	-- 	Player.body:setLinearVelocity(0, -2000)
+	-- end
 end
 
 return Player

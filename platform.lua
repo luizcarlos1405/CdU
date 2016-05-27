@@ -62,10 +62,10 @@ function Platform:mousereleased(x, y, button, isTouch)
 end
 
 function Platform:isPlatform(x, y)
-	local gridx, gridy = Push:toGame(x, y)
-	gridx, gridy = Tools.gameToGrid(gridx, gridy)
+	-- local gridx, gridy = Push:toGame(x, y)
+	-- gridx, gridy = Tools.gameToGrid(gridx, gridy)
 	for i,p in ipairs(Platform) do
-		if p.x == gridx and p.y == gridy then
+		if p.x == x and p.y == y then
 			return true
 		end
 	end
