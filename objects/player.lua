@@ -37,9 +37,9 @@ function Player:create(name, layer, x, y, w, h)
 		player.vel = {player.vel[1]*player.fric, player.vel[2]*player.fric}
 
 		-- GRAVITY TEMP
-		player.vel[2] = player.vel[2] + 200 * dt
+		player.vel[2] = player.vel[2] + 300	 * dt
 
-		-- COLISION TEMPO
+		-- COLISION TEMP
 		if player.y > Height - player.h then
 			player.y = Height - player.h
 		end
@@ -50,7 +50,7 @@ function Player:create(name, layer, x, y, w, h)
 		love.graphics.setColor(213, 29, 230)
 		love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
 	end
-	
+
 	return player
 
 end

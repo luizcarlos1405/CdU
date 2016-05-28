@@ -16,8 +16,9 @@ function Renderer:create()
 	end
 
 	-- Draw all the objects in all the layers
-	function renderer:draw()
+	function renderer:draw(fps)
 		Push:apply("start")
+		love.graphics.setColor(255, 255, 255)
 		for layer = 0, #self.drawer do
 			for draw = 0, #self.drawer[layer] do
 				local obj = self.drawer[layer][draw]
@@ -27,6 +28,8 @@ function Renderer:create()
 			end
 		end
 		Push:apply("end")
+
+		if fps == "fps" then love.graphics.print(love.timer.getFPS()) end
 	end
 
 	function renderer:clean()

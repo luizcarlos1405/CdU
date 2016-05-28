@@ -1,17 +1,19 @@
 -- Require everything
-require("camera")
-Gamestate = require("gamestate")
-World     = require("world")
-Player    = require("player")
+require("tools/camera")
+Ser       = require("tools/ser")
+Push      = require("tools/push")
+Timer     = require("tools/timer")
 Render    = require("tools/renderer")
-Timer     = require("timer")
-Push      = require("push")
-Ser       = require("ser")
+Gamestate = require("tools/gamestate")
+Player    = require("objects/player")
+Tile      = require("objects/tile")
+Map       = require("objects/map")
+World     = require("world")
 
 -- States
-Logos_Screen = require("logos_screen")
-Main_Menu    = require("main_menu")
-Game         = require("game")
+Logos_Screen = require("gamestates/logos_screen")
+Main_Menu    = require("gamestates/main_menu")
+Game         = require("gamestates/game")
 
 -- Global variables
 Screen_Width, Screen_Height = love.window.getDesktopDimensions()
