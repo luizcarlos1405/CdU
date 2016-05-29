@@ -6,7 +6,8 @@ function Game:enter()
 	Player_1 = Player:create("Player 1", 1, 168, Height - 200, 64, 128, "player.png")
 	Player_1:load()
 
-	Map:load("test3", "test.png", 10, 5, 0)
+	Map:load("test3", 10, 5, 0)
+	Map:addTileset("test.png", 64, 64, 10, 5)
 	Map:addTileset("test.png", 64, 64, 10, 5)
 
 	-- love.timer.sleep(0.5)

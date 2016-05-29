@@ -67,7 +67,7 @@ function Map:draw()
 				if t.x >= camera.x - self.tilewidth and t.x <= camera.x + Width + self.tilewidth and t.y >= camera.y - self.tileheight and t.y <= camera.y + Height + self.tileheight then
 					love.graphics.draw(self.tilesets[t.tileset], self.quads[t.quad], t.x, t.y)
 					love.graphics.print(layer, t.x, t.y)
-					-- love.graphics.print("              "..t.tilset.." "..#self.quads, Player_1.x, Player_1.y)
+					-- love.graphics.print("              "..t.quad.."  "..#self.quads, Player_1.x * t.quad, Player_1.y)
 				end
 			end
 		end
