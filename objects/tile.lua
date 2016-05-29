@@ -21,7 +21,7 @@ function Tile:extractQuads(tileset, width, height, w_tiles, h_tiles, spacing)
 	for i = 1, h_tiles do
 		y = (i - 1) * height + (i * spacing)
 		for j = 1, w_tiles do
-			x = (j - 1) * height + (j * spacing)
+			x = (j - 1) * width + (j * spacing)
 			local quad = love.graphics.newQuad(x, y, width, height, tileset:getDimensions())
 			table.insert(quads, quad)
 		end
