@@ -1,11 +1,13 @@
 -- Global variables
 
-Screen_Width, Screen_Height = love.window.getDesktopDimensions()
-Width, Height               = 1920, 1080
-Time_0                      = love.timer.getTime()
+Screen_Width  =	love.graphics.getWidth()
+Screen_Height = love.graphics.getHeight()--love.window.getDesktopDimensions()
+Width, Height = 1920, 1080
+Time_0        = love.timer.getTime()
 
 -- Require everything
 require("tools/camera")
+require("tools/physics")	
 Ser       = require("tools/ser")
 Push      = require("tools/push")
 Timer     = require("tools/timer")
@@ -28,12 +30,16 @@ function love.load()
 
 	-- Screen scalling
 	-- love.graphics.setDefaultFilter("nearest", "nearest")
-	Push:setupScreen(Width, Height, Screen_Width, Screen_Height, {fullscreen = true, resizable = false})
+	Push:setupScreen(Width, Height, Screen_Width, Screen_Height, {fullscreen = false, resizable = false})
 	Push:setBorderColor{love.graphics.getBackgroundColor()}
 
 	-- Gamestate control from humplib
 	Gamestate.registerEvents()
 	Gamestate.switch(Logos_Screen)
+end
+
+function love.resize(w, h)
+	print("Resized")
 end
 
 function love.keyreleased(key)

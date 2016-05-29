@@ -19,7 +19,6 @@ function Game:update(dt)
 
 	-- UPDATE
 	World_1:update(dt)
-
 end
 
 function Game:draw()

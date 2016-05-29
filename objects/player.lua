@@ -16,13 +16,15 @@ function Player:create(name, layer, x, y, w, h, img)
 	player.y     = y or 0
 	player.r     = 0
 	player.scale = {x = 1, y = 1}
-	player.ox    = player.w / 2
-	player.oy    = player.h / 2
+	player.ox    = 0--player.w / 2
+	player.oy    = 0--player.h / 2
 	player.jump  = 2000
 	player.acel  = 150
 	player.vel   = {0, 0}
 	player.fric  = 0.7
 	player.layer = layer or 1
+	player.colX  = player.w
+	player.colY  = player.h
 
 
 	function player:load()
@@ -56,13 +58,41 @@ function Player:create(name, layer, x, y, w, h, img)
 		-- GRAVITY TEMP
 		-- player.vel[2] = player.vel[2] + 300	 * dt
 
-		-- COLISION TEMP
-		-- if player.y > Height - player.oy then
-		-- 	player.y = Height - player.oy
-		-- end
+		-- COLISION
+		-- Grid player position
+		local x = math.ceil(player.x / 64)
+		local y = math.ceil(player.y / 64)
+		local w = 1
+		local h = 2
+		-- Avoid negative values and 0
+		if x < 1 then x = 1 end
+		if y < 1 then y = 1 end
+		-- print(x.." "..y)
+		-- Iterate the tiles into colision layers arround the player and aply physics
+		for i = x, x + w do
+			for j = y, y + h do
+				for layer = 1, #Tiles do
+					if Tiles[layer].colision then
+						local tile = Tiles[layer][i][j]
+						if tile then
+							print("COLISION WITH TILE: "..i..", "..j)
+						else
+							print("NO COLISION!")
+						end
+					end
+				end
+			end
+		end
 
 		-- CAMERA FOLLOW
-		camera:setPosition(self.x, self.y)
+
+		-- Hard camera
+		camera:setPosition(self.x + self.w / 2, self.y + self.h / 2)
+		--
+
+		-- Smoth camera
+		-- camera:move(((self.x + self.w / 2) - (camera.x + Width / 2)) * 0.2, ((self.y + self.h / 2) - (camera.y + Height / 2)) * 0.2)
+		--
 
 	end
 
@@ -73,6 +103,10 @@ function Player:create(name, layer, x, y, w, h, img)
 			love.graphics.setColor(213, 29, 230)
 			love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
 		end
+
+		-- BOUNDING BOX
+		self.bounding = require("objects/rectangle"):new(self.x, self.y, self.w, self.h)
+		love.graphics.line(self.bounding.x, self.bounding.y, self.bounding.x, self.bounding.y + self.bounding.h, self.bounding.x + self.bounding.w, self.bounding.y + self.bounding.h, self.bounding.x + self.bounding.w, self.bounding.y, self.bounding.x, self.bounding.y)
 	end
 
 	return player
