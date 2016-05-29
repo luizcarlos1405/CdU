@@ -58,7 +58,7 @@ function Player:create(name, layer, x, y, w, h, img)
 		-- GRAVITY TEMP
 		-- player.vel[2] = player.vel[2] + 300	 * dt
 
-		-- COLISION
+		-- COLLISION
 		-- Grid player position
 		local x = math.ceil(player.x / 64)
 		local y = math.ceil(player.y / 64)
@@ -68,16 +68,18 @@ function Player:create(name, layer, x, y, w, h, img)
 		if x < 1 then x = 1 end
 		if y < 1 then y = 1 end
 		-- print(x.." "..y)
-		-- Iterate the tiles into colision layers arround the player and aply physics
+		-- Iterate the tiles into collision layers arround the player and aply physics
 		for i = x, x + w do
 			for j = y, y + h do
 				for layer = 1, #Tiles do
-					if Tiles[layer].colision then
+					if Tiles[layer].collision then
 						local tile = Tiles[layer][i][j]
 						if tile then
-							print("COLISION WITH TILE: "..i..", "..j)
+							if  boxCollision(Player_1, tile) then
+								print("COLLISION WITH TILE: "..i..", "..j)
+							end
 						else
-							print("NO COLISION!")
+							print("NO COLLISION!")
 						end
 					end
 				end

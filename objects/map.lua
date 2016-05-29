@@ -13,7 +13,7 @@ function Map:load(mapname, w_tiles, h_tiles, spacing)
 	-- Make coordinate sistem
 	for layer = 1, #self.map.layers do
 		Tiles[layer] = {}  -- Global
-		Tiles[layer].colision = self.map.layers[layer].properties["colision"]
+		Tiles[layer].collision = self.map.layers[layer].properties["collision"]
 		-- for x = 1, self.map.width do
 		-- 	self.map.layers[layer][x] = {}
 		-- 	for y = 1, self.map.height do
@@ -42,7 +42,7 @@ function Map:update(dt)
 		camera.y = self.height - Height
 	end
 
-	-- COLISION
+	-- collision
 	-- Calculate only once
 	-- local pX      = math.abs(Player_1.x - (self.map.tilewidth / 2))
 	-- local pY      = math.abs(Player_1.y - (self.map.tileheight / 2))
@@ -52,9 +52,9 @@ function Map:update(dt)
 	-- 		if pX - t.x < Player_1.colX and pY - t.y < Player_1.colY then
 	-- 			if Player_1.x + Player_1.ox > t.x and Player_1.x - Player_1.ox < t.x + t.w and
 	-- 			Player_1.y + Player_1.oy > t.y and Player_1.y - Player_1.oy < t.y + t.h then
-	-- 				if self.map.layers[layer].properties["colision"] then
+	-- 				if self.map.layers[layer].properties["collision"] then
 	-- 					-- Player_1.y = Player_1.y - Player_1.y + Player_1.oy - t.y
-	-- 					print("COLISION	")
+	-- 					print("collision	")
 	-- 				end
 	-- 			end
 	-- 		end
