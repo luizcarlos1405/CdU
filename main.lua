@@ -1,3 +1,9 @@
+-- Global variables
+
+Screen_Width, Screen_Height = love.window.getDesktopDimensions()
+Width, Height               = 1920, 1080
+Time_0                      = love.timer.getTime()
+
 -- Require everything
 require("tools/camera")
 Ser       = require("tools/ser")
@@ -15,18 +21,10 @@ Logos_Screen = require("gamestates/logos_screen")
 Main_Menu    = require("gamestates/main_menu")
 Game         = require("gamestates/game")
 
--- Global variables
-Screen_Width, Screen_Height = love.window.getDesktopDimensions()
-Width, Height               = 1920, 1080
-Time_0                      = love.timer.getTime()
-
--- RENDERER
-
 function love.load()
 	-- Load settings
-	Renderer = Render:create()
+	Renderer = Render:create("nearest", "linear", 64, 64)
 	World_1  = World:create()
-
 
 	-- Screen scalling
 	-- love.graphics.setDefaultFilter("nearest", "nearest")

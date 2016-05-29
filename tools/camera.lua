@@ -1,17 +1,18 @@
-camera = {}
-camera.x = 0
-camera.y = 0
-camera.scaleX = 1
-camera.scaleY = 1
-camera.rotation = 0
+camera           = {}
+camera.x         = 0
+camera.y         = 0
+camera.scaleX    = 1
+camera.scaleY    = 1
+camera.rotation  = 0
+camera.transW    = Width / 2
+camera.transH    = Height / 2
 
 function camera:set()
 	love.graphics.push()
-	love.graphics.translate(Width / 2, Height / 2)
 	love.graphics.rotate(-self.rotation)
-	love.graphics.translate(- Width / 2, - Height / 2)
 	love.graphics.scale(1 / self.scaleX, 1 / self.scaleY)
 	love.graphics.translate(-self.x, -self.y)
+
 end
 
 function camera:unset()
@@ -24,7 +25,9 @@ function camera:move(dx, dy)
 end
 
 function camera:rotate(dr)
+	love.graphics.translate(self.transW, self.transH)
 	self.rotation = self.rotation + dr
+	love.graphics.translate(- self.transW, - self.transH)
 end
 
 function camera:scale(sx, sy)
@@ -34,15 +37,13 @@ function camera:scale(sx, sy)
 end
 
 function camera:setPosition(x, y)
-	self.x = (x - Width / 2) or self.x
-	self.y = (y - Height / 2) or self.y
+	self.x = (x - self.transW * self.scaleX) or self.x
+	self.y = (y - self.transH * self.scaleY) or self.y
 end
 
 function camera:setAngle(a)
 	self.rotation = a
-	length = ((Width / 2) ^ 2 + (Height / 2) ^ 2) ^ (1 / 2)
-	-- self.x = self.x - math.cos(Player.body:getAngle()) * length--math.cos(Player.body:getAngle()) * (((screenWidth / 2) ^ 2 + (screenHeight / 2) ^ 2) ^ (1 / 2))
-	-- self.y = self.y - math.sin(Player.body:getAngle()) * length--math.sin(Player.body:getAngle()) * (((screenWidth / 2) ^ 2 + (screenHeight / 2) ^ 2) ^ (1 / 2))
+	length = ((self.transW) ^ 2 + (self.transH) ^ 2) ^ (1 / 2)
 end
 
 function camera:setScale(sx, sy)
