@@ -3,10 +3,11 @@ local Game = {}
 function Game:enter()
 	love.graphics.setBackgroundColor(28, 0, 36)
 
-	Player_1 = Player:create("Player 1", 1, 50, Height - 200, 64, 128, "player.png")
+	Player_1 = Player:create("Player 1", 1, 168, Height - 200, 64, 128, "player.png")
 	Player_1:load()
 
-	Map:load("test2", "test.png", 10, 5, 0)
+	Map:load("test3", "test.png", 10, 5, 0)
+	Map:addTileset("test.png", 64, 64, 10, 5)
 
 	-- love.timer.sleep(0.5)
 end

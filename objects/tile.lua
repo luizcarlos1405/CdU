@@ -1,22 +1,22 @@
 local Tile = {}
 
-function Tile:new(x, y, w, h, quad)
-	local tile = {}
-	tile.x     = x
-	tile.y     = y
-	tile.w     = w
-	tile.h     = h
-	tile.quad  = quad
+function Tile:new(x, y, w, h, quad, tileset)
+	local tile  = {}
+	tile.x      = x
+	tile.y      = y
+	tile.w      = w
+	tile.h      = h
+	tile.quad   = quad
+	tile.tileset = tileset
 
 	return tile
-
 end
 
 -- Extract all quads from a tileset and return a table with them
 function Tile:extractQuads(tileset, width, height, w_tiles, h_tiles, spacing)
-	local quads             = {}
-	local spacing           = spacing or 0
-	local x, y              = 0, 0
+	local quads   = {}
+	local spacing = spacing or 0
+	local x, y    = 0, 0
 
 	for i = 1, h_tiles do
 		y = (i - 1) * height + (i * spacing)
