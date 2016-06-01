@@ -34,4 +34,8 @@ function game:keyreleased(key)
 	player:keyreleased(key)
 end
 
+function game:keypressed(key)
+	player:keypressed(key)
+end
+
 return game
