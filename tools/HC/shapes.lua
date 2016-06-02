@@ -463,4 +463,3 @@ return {
 	newCircleShape      = newCircleShape,
 	newPointShape       = newPointShape,
 }
-
