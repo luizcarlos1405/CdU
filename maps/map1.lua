@@ -70,7 +70,7 @@ return {
       offsetx = 0,
       offsety = 0,
       properties = {
-        ["colision"] = false
+        ["collision"] = false
       },
       encoding = "lua",
       data = {
@@ -108,7 +108,7 @@ return {
       offsetx = 0,
       offsety = 0,
       properties = {
-        ["colision"] = true
+        ["collision"] = true
       },
       encoding = "lua",
       data = {
